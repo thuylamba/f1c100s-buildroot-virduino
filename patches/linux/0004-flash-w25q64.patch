@@ -1,0 +1,61 @@
+--- a/arch/arm/boot/dts/suniv-f1c100s-licheepi-nano.dts
++++ b/arch/arm/boot/dts/suniv-f1c100s-licheepi-nano.dts
+@@ -90,7 +90,7 @@
+   flash@0 {
+     #address-cells = <1>;
+     #size-cells = <1>;
+-    compatible = "winbond,w25q128", "jedec,spi-nor";
++    compatible = "winbond,w25q64", "jedec,spi-nor";
+     reg = <0>;
+     spi-max-frequency = <50000000>;
+     partitions {
+@@ -100,25 +100,25 @@
+ 
+       partition@0 {
+         label = "u-boot";
+-        reg = <0x000000 0x100000>;
++        reg = <0x000000 0x80000>;
+         read-only;
+       };
+ 
+-      partition@100000 {
++      partition@80000 {
+         label = "dtb";
+-        reg = <0x100000 0x10000>;
++        reg = <0x80000 0x10000>;
+         read-only;
+       };
+ 
+-      partition@110000 {
++      partition@90000 {
+         label = "kernel";
+-        reg = <0x110000 0x4f0000>;
++        reg = <0x90000 0x400000>;
+         read-only;
+       };
+ 
+-      partition@600000 {
++      partition@490000 {
+         label = "rootfs";
+-        reg = <0x600000 0xA00000>;
++        reg = <0x490000 0x370000>;
+       };
+     };
+   };
+--- a/drivers/mtd/spi-nor/spi-nor.c
++++ b/drivers/mtd/spi-nor/spi-nor.c
+@@ -2099,11 +2099,11 @@ static const struct flash_info spi_nor_i
+ 			SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
+ 			SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
+ 	},
+-	{ "w25x64", INFO(0xef3017, 0, 64 * 1024, 128, SECT_4K) },
+-	{ "w25q64", INFO(0xef4017, 0, 64 * 1024, 128, SECT_4K) },
++	{ "w25x64", INFO(0xef3017, 0, 64 * 1024, 128, 0) },
++	{ "w25q64", INFO(0xef4017, 0, 64 * 1024, 128, 0) },
+ 	{
+ 		"w25q64dw", INFO(0xef6017, 0, 64 * 1024, 128,
+-			SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
++			0 | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
+ 			SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
+ 	},
+ 	{
