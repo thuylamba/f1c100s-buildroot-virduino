@@ -1,0 +1,3 @@
+[submodule "package/wfscan/wfscan"]
+	path = package/wfscan/wfscan
+	url = https://github.com/thuylamba/wfscan.git

@@ -1,0 +1,5 @@
+config BR2_PACKAGE_WFSCAN
+	bool "wfscan"
+	default y
+	help
+		Cameye Personal
