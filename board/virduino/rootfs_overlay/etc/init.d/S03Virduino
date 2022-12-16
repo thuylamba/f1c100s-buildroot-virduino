@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+load_Virduino() {
+	/usr/bin/virduino-init.sh
+}
+free_Virduino() {
+	/usr/bin/virduino-exit.sh
+}
+case "$1" in
+	start)
+		load_Virduino
+		;;
+	stop)
+		free_Virduino
+		;;
+	restart|reload)
+		free_Virduino
+		load_Virduino
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
